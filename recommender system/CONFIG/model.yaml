@@ -1,0 +1,9 @@
+#INITIAL SETTINGS
+model_name : None
+
+model : {
+"surprise": [ SVD(), BaselineOnly(), NormalPredictor(), SVDpp(), ],
+}
+
+cv : 10
+metrics : 'mae'
