@@ -1,14 +1,9 @@
-import os
-import pandas as pd
 import streamlit as st
 from surprise import dump
 
-import time
 
-
-def training_page_run(data):
+def training_page_run(data, data_train):
     from model.suprise.training.model_training import model_search
-    from model.processing.data import load_data, reader_data
 
     st.header("Training Dashboard 📚")
 
@@ -27,21 +22,8 @@ def training_page_run(data):
     if st.button('Train'):
         st.write('Training Model...')
 
-        rating_data = load_data(
-            dataset = 'ml-1m',
-            data    = 'ratings.dat',
-            cols    = ["UserID","MovieID","Rating"],
-        )
-
-        rating_data = reader_data(
-            data    = rating_data,
-            model   ='surprise',
-            cols    = ["UserID","MovieID","Rating"],
-            scale   = True
-        )
-
         with st.spinner(f'Doing Model Selections'):
-            model_search(rating_data)
+            model_search(data_train)
         st.success("Training model completed!✨",icon="✅")
         result = data
         st.dataframe(data)
@@ -58,30 +40,25 @@ def training_page_run(data):
 
         st.write(f'Fine Tuning {option} Model...')
 
-
-        rating_data = load_data(
-            dataset = 'ml-1m',
-            data    = 'ratings.dat',
-            cols    = ["UserID","MovieID","Rating"],
-        )
-        rating_data = reader_data(
-            data    = rating_data,
-            model   ='surprise',
-            cols    = ["UserID","MovieID","Rating"],
-            scale   = True
-        )
-
         with st.spinner(f'Training {option}... please wait!'):
             if option == 'SVD':
                 from surprise import SVD
-                fine_tined_model = fine_tuned_model(data_train= rating_data,model = option, cv = 5)
+                fine_tined_model = fine_tuned_model(
+                    data_train= data_train,
+                    model = option,
+                    cv = 5)
+
                 algo = SVD(**fine_tined_model.best_params['rmse'])
                 dump.dump("../recommender_system/backend/model/model.pkl", algo=algo)
                 st.write(f"SVD MODEL: {fine_tined_model.best_params['rmse']}")
 
             elif option == 'SVDpp':
                 from surprise import SVDpp
-                fine_tined_model = fine_tuned_model(data_train= rating_data,model = option, cv = 5)
+                fine_tined_model = fine_tuned_model(
+                    data_train= data_train,
+                    model = option,
+                    cv = 5)
+
                 algo = SVDpp(**fine_tined_model.best_params['rmse'])
                 dump.dump("../recommender_system/backend/model/model.pkl", algo=algo)
                 st.write(f"SVD MODEL: {fine_tined_model.best_params['rmse']}")

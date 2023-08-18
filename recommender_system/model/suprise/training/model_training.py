@@ -7,7 +7,6 @@ from surprise import SVDpp
 from surprise.model_selection import cross_validate
 from tqdm import tqdm
 
-
 def model_search(data, selected_model=None ,cv=2, metrics='mae'):
     """
     Search for the best algorithm among the given models using cross-validation.
@@ -63,8 +62,6 @@ def model_search(data, selected_model=None ,cv=2, metrics='mae'):
     results.to_csv("../recommender_system/backend/data/result_surprise.csv",
                    index=False)
 
-
-
 def fine_tuned_model(data_train, model, cv):
     from surprise.model_selection import GridSearchCV
 
@@ -107,10 +104,6 @@ def fine_tuned_model(data_train, model, cv):
 
     return gs
 
-
-
-
-
 def model_train(params = None, data_train = None, selected_option='BaselineOnly'):
     """
     Train and return a selected model based on the saved model data.
@@ -137,9 +130,6 @@ def model_train(params = None, data_train = None, selected_option='BaselineOnly'
 
     file_name = os.path.expanduser(model_filename)
     dump.dump(file_name, algo=model)
-
-
-
 
 def hybrid_recsys(data):
     pass
