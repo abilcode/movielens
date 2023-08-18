@@ -1,7 +1,7 @@
 from CONFIG.helper.config import load_config
 from model.processing.data import load_data
 from model.processing.data import reader_data
-from model.suprise.training.model_training import model_search
+from model.suprise.training.model_training import model_search, fine_tuned_model, model_train
 
 model_config = load_config('model.yaml')
 
@@ -20,15 +20,24 @@ rating_data = reader_data(
     scale   = True
 )
 
-result = model_search(
+# result = model_search(
+#
+#     data=rating_data,
+#     #selected_model = model_config['model']['surprise'],
+#     cv = model_config['cv'],
+#     metrics = model_config['metrics']
+# )
+# print(result)
+#
+# result.to_csv(
+#     "../dashboard/backend/data/result_surprise.csv",
+#     index=False)
+#
+model = 'SVD'
+params = fine_tuned_model(rating_data, model, cv = 5)
 
-    data=rating_data,
-    #selected_model = model_config['model']['surprise'],
-    cv = model_config['cv'],
-    metrics = model_config['metrics']
-)
-print(result)
+from surprise import SVD
+from surprise import dump
 
-result.to_csv(
-    "../dashboard/backend/data/result_surprise.csv",
-    index=False)
+algo = SVD(**params.best_params['rmse'])
+dump.dump("../backend/model/model.pkl", algo=algo)
