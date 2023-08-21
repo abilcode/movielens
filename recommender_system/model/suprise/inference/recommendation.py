@@ -46,9 +46,11 @@ if __name__ == "__main__":
     )
     print(type(model))
     score = []
+    subset = [i for i in range(300) if i % 2 ==0]
     for i in range(1,300):
-        raitng_user_item = item_rating(model=model,user=2,item=i,print_output=False)['rating']
-        score.append((i,raitng_user_item))
+        if i not in subset:
+            raitng_user_item = item_rating(model=model,user=2,item=i,print_output=False)['rating']
+            score.append((i,raitng_user_item))
     print(score)
     # Sort the list of tuples based on the second element (index 1)
     sorted_score= sorted(score, key=lambda x: x[1], reverse=True)
