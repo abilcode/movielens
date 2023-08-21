@@ -40,4 +40,4 @@ from surprise import SVD
 from surprise import dump
 
 algo = SVD(**params.best_params['rmse'])
-dump.dump("../backend/model/model.pkl", algo=algo)
+dump.dump("../analysis/model/model.pkl", algo=algo)

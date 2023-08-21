@@ -1,7 +1,4 @@
 import os
-import pickle
-from pprint import pprint as pp
-from surprise import dump
 
 
 def load_model(model_filename, verbose=False):
@@ -20,7 +17,7 @@ def item_rating(model,user = 0, item = 0, print_output=False):
     iid = str(item)
     loaded_model = model
     prediction = loaded_model.predict(user, item, verbose=True)
-    rating = prediction.est
+    rating = round(prediction.est, 3)
     details = prediction.details
     uid = prediction.uid
     iid = prediction.iid
@@ -48,6 +45,13 @@ if __name__ == "__main__":
                      )
     )
     print(type(model))
-
+    score = []
     for i in range(1,300):
-        a = item_rating(model=model,user=1,item=i,print_output=False)['rating'];
+        raitng_user_item = item_rating(model=model,user=2,item=i,print_output=False)['rating']
+        score.append((i,raitng_user_item))
+    print(score)
+    # Sort the list of tuples based on the second element (index 1)
+    sorted_score= sorted(score, key=lambda x: x[1], reverse=True)
+    print("\n"*2)
+    # Print the sorted list of tuples
+    print(sorted_score[:20])

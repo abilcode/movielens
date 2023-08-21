@@ -1,5 +1,6 @@
 import streamlit as st
 
+
 def demo_page_run():
     st.header("Model Demo: 📚")
 
@@ -12,9 +13,12 @@ def demo_page_run():
             "UserID",
             key="placeholder",
         )
+        st.write(f"Choosing used with {user_id} id ")
+
+    with col2:
         num_recs = st.slider(
             "How many recommendations does the User Needs",
-            value=[5,10,15,20]
+            0, 25, 5,
         )
         st.write(f"Outputing {num_recs} recommendations")
 

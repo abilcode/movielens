@@ -1,4 +1,5 @@
 data/ml-100k
 data/ml-1m
+analysis/model/*pkl
 data/*.ipynb
 model/result/*.csv

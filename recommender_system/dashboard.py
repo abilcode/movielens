@@ -5,6 +5,7 @@ from model.processing.data import load_data, reader_data
 
 from frontend.pages.performance.performance import performance_page_run
 from frontend.pages.training.training_page import training_page_run
+from frontend.pages.demo.demo_page import demo_page_run
 
 st.set_page_config(
     # This will make the content occupy the full width of the screen
@@ -13,7 +14,6 @@ st.set_page_config(
 
 )
 def main():
-
     # Using "with" notation
     with st.sidebar:
         add_radio = st.radio(
@@ -48,7 +48,7 @@ def main():
                           data_train=rating_data)
 
     elif add_radio == 'Model Demo':
-        pass
+        demo_page_run()
 
     else :
         st.header("Main dashboard ✨")
