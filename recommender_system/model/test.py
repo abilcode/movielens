@@ -1,7 +1,7 @@
 from CONFIG.helper.config import load_config
 from model.processing.data import load_data
 from model.processing.data import reader_data
-from model.suprise.training.model_training import model_search, fine_tuned_model, model_train
+from model.surprise.training.model_training import model_search, fine_tuned_model, model_train
 
 model_config = load_config('model.yaml')
 

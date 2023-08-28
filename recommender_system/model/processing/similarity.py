@@ -54,7 +54,18 @@ def cosine_similarity_matrix(data):
 
 if __name__=='__main__':
     # Call the function with the sample data
-    similarity_matrix = cosine_similarity_matrix(generate_random_genre(10000).values())
+    content = generate_random_genre(1000).values()
+    #print(content)
+    # Sort each element within the list based on the strings
+    sorted_content = [sorted(item.split('|')) for item in content]
+    print(sorted_content)
+
+    print("\n"*3)
+    sorted_content = ['|'.join(item) for item in sorted_content]
+    print(sorted_content)
+    print(len(sorted_content))
+    print(len(set(sorted_content)))
+    similarity_matrix = cosine_similarity_matrix(content)
     movie_scores = list(enumerate(similarity_matrix[0]))
     movie_scores = [ i for i in movie_scores if i[1] != 1]
     sorted_score = sorted(movie_scores, key=lambda x: x[1], reverse=True)

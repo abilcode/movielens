@@ -3,8 +3,8 @@ from surprise import dump
 
 
 def training_page_run(data, data_train):
-    from model.suprise.training.model_training import model_search
-
+    from model.surprise.training.model_training import model_search
+    from model.surprise.inference.recommendation import load_model
     st.header("Training Dashboard 📚")
 
     st.write("Performing Model Selections:")
@@ -25,8 +25,6 @@ def training_page_run(data, data_train):
         with st.spinner(f'Doing Model Selections'):
             model_search(data_train)
         st.success("Training model completed!✨",icon="✅")
-        result = data
-        st.dataframe(data)
 
     st.write("Performing Model Fine-Tuning:")
     option = st.selectbox(
@@ -35,8 +33,8 @@ def training_page_run(data, data_train):
         placeholder="Choose Model"
     )
     if st.button('Fine-Tuned'):
-        from model.suprise.training.model_training import fine_tuned_model
-        from model.processing.data import load_data, reader_data
+        from model.surprise.training.model_training import fine_tuned_model
+
 
         st.write(f'Fine Tuning {option} Model...')
 

@@ -2,8 +2,9 @@ import os
 import pandas as pd
 from surprise import BaselineOnly
 from surprise import NormalPredictor
-from surprise import SVD
-from surprise import SVDpp
+from surprise import SlopeOne
+from surprise import SVD, SVDpp, NMF
+from surprise import KNNBasic, KNNWithMeans, KNNBaseline, KNNWithZScore
 from surprise.model_selection import cross_validate
 from tqdm import tqdm
 
@@ -23,7 +24,10 @@ def model_search(data, selected_model=None ,cv=2, metrics='mae'):
     # Iterate over all algorithms
     if selected_model == None :
         algorithms = [
-             SVDpp(), SVD(), BaselineOnly(), NormalPredictor()
+            SVDpp(), SVD(), NMF(),
+            BaselineOnly(), NormalPredictor(),
+            KNNBasic(), KNNBaseline(), KNNWithZScore(), KNNWithMeans(),
+            SlopeOne()
         ]
     else:
         algorithms = selected_model
